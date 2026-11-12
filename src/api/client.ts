@@ -16,7 +16,7 @@ export type StatoServizio = S['StatoServizio']
 
 /** Versione dell'API con cui questa dashboard è stata scritta: se il server dichiara un'altra versione, un avviso lo dice
  *  (Backend e Frontend vanno insieme, con lo stesso tag). */
-export const VERSIONE_API_ATTESA = '0.2.0'
+export const VERSIONE_API_ATTESA = '1.0.0'
 export type InfoInquinante = S['InfoInquinante']
 export type AriaMese = S['RispostaAriaMese']
 type CalendarioAria = S['RispostaCalendarioAria']
