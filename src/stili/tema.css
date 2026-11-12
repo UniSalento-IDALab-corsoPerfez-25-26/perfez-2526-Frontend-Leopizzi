@@ -1,0 +1,260 @@
+/*
+ * Token del tema OneHealth.
+ *
+ * Interfaccia: colori campionati a pixel dallo screenshot di "flux" (Nixtio, Dribbble), lo stile di riferimento
+ * scelto da Matteo il 02/10/2026: pagina #E1E1E1, card bianche, barra laterale e card in evidenza #222124,
+ * accenti lime #DAF163 e lavanda #BBB2F5, pillole #4C4B4E. Testi secondari scuriti rispetto a flux (#747474 →
+ * #5E5E60) per arrivare a 4.5:1 sulla pagina grigia. Il tema scuro deriva dalle stesse card scure di flux.
+ *
+ * Font: Manrope (testo e numeri), alternativa libera (OFL) a Redoneta di Nura, che è a pagamento (vincolo di
+ * gratuità, repository Backend, docs/Architettura.md). I numeri di testa usavano Doto a punti (al posto di LED Pixel C Unicase): sostituito il
+ * 19/10/2026 da Manrope leggero con cifre tabulari, perché un font «tech» usato per effetto sembrava generato.
+ *
+ * Dati (passo 5 anti-slop, 19/10/2026, scelte di Matteo): via la lavanda di flux. L'aria è blu petrolio (rampa della
+ * mappa e di Stagionalità), le zone a confronto blu inchiostro, oliva, magenta e arancio, tutte validate con lo script
+ * della skill dataviz. Il lime resta solo per il marchio e la voce attiva della barra laterale.
+ *
+ * Raggi: flux usa ~26 px sulle card e la pillola su tutto; dal passo 5 i raggi hanno ruoli (cornice, card,
+ * contenitore, controllo, segmento, pillola solo per gli stati), v. sotto.
+ */
+
+:root {
+  color-scheme: light;
+
+  --font: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* spaziatura a tre livelli (passo 2 anti-slop, 19/10/2026): stretta dentro un gruppo, media fra i gruppi di una
+     sezione e fra le card, larga (con un filetto) fra le sottosezioni di una card. Prima: 12-14 px ovunque */
+  --spazio-riga: 6px;
+  --spazio-gruppo: 16px;
+  --spazio-sezione: 32px;
+
+  /* scala tipografica a ruoli (passo 3 anti-slop, 19/10/2026): sette gradini al posto di 16 dimensioni sparse
+     (11, 11,5, 12, 12,5, 13, 13,5, 14, 15, 16, 18, 19, 21, 22, 40 px, 0,82 rem). Il ruolo distingue anche con peso e
+     colore: le note sono in --testo-2, i titoli in grassetto. Mai sotto 11 px (passo 1) */
+  --tipo-sigla: 11px;         /* sigle, unità sotto un nome, etichette dell'asse temporale, attribuzione */
+  --tipo-nota: 12px;          /* note, legende, tooltip, intestazioni di tabella, metadati */
+  --tipo-corpo: 13px;         /* testo, controlli, celle di tabella, sottotitoli */
+  --tipo-sezione: 15px;       /* titolo di una sottosezione, voci della barra laterale, periodo, frase di sintesi */
+  --tipo-titolo: 18px;        /* titolo di una card, marchio */
+  --tipo-zona: 22px;          /* nome della zona in primo piano */
+  --tipo-cifra: 40px;         /* numeri di testa */
+  --interlinea-titolo: 1.2;
+  --interlinea-corpo: 1.4;
+  --interlinea-nota: 1.45;
+
+  /* raggi con ruoli (passo 5 anti-slop, 19/10/2026, scelta di Matteo): prima card a 24 px e pillola su tutto, così
+     un'azione, un filtro e uno stato avevano la stessa forma. Ora la forma dice il ruolo: la pillola resta solo agli
+     stati (N/D, null, bande di salubrità, dato modellato) e alle etichette delle zone sulla mappa */
+  --raggio-cornice: 22px;     /* area dei contenuti dentro la barra scura (era 28) */
+  --raggio: 18px;             /* card, sezioni (era 24) */
+  --raggio-piccolo: 12px;     /* contenitori dentro la pagina: filtri, barra temporale, mappa, menu, avvisi */
+  --raggio-controllo: 10px;   /* pulsanti, barre dei filtri, voci di navigazione */
+  --raggio-segmento: 6px;     /* pulsanti dentro una barra di segmenti e il loro indicatore (10 − 4 di imbottitura) */
+  --pillola: 999px;           /* solo stati */
+
+  /* rotellina di caricamento: dal 29/10/2026 sta nell'etichetta grigia dei dati della finestra, al posto della sua
+     icona, quindi l'arco è nel colore del testo (prima un cerchio a contrasto invertito, arco nel colore della scheda).
+     Segue il tema da sola, perché --testo cambia in :root[data-tema='scuro'] */
+  --caricamento-arco: var(--testo);
+
+  /* superfici */
+  --pagina: #e1e1e1;
+  --card: #ffffff;
+  --card-2: #f2f2f2;          /* tracce, hover, campi */
+  --card-3: #e8e8e9;
+  --barra: #222124;           /* barra laterale (scura anche nel tema chiaro, come flux) */
+  --barra-testo: #f6f5f7;
+  --barra-testo-2: #a9a9ab;
+  --barra-attiva: #ffffff;
+  --barra-attiva-testo: #222124;
+  
+
+  /* testo */
+  --testo: #222124;
+  --testo-2: #5e5e60;
+  --testo-3: #6b6b6d;          /* 4,5:1 anche sul fondo grigio --card-2 (prima #747474: 4,1:1) */
+  --linea: #e6e6e7;           /* hairline su card bianca */
+  --linea-2: #d4d4d6;
+  --griglia: #ededee;         /* griglia dei grafici: un passo sopra la superficie */
+  --asse: #cfcfd1;
+
+  /* accenti di flux */
+  --lime: #daf163;
+  /* testata (25/10/2026): un solo margine interno, un solo spazio fra i controlli, una sola altezza */
+  --margine-testata: 12px;
+  --spazio-testata: 10px;
+  --altezza-testata: 44px;
+  --su-accento: #222124;
+
+  /* zone a confronto (fino a 4), passo 5 (19/10/2026): blu inchiostro (era viola), oliva, magenta, arancio (era ciano:
+     con il magenta ΔE 2,9 per protanopia, indistinguibili). Validate con lo script della skill dataviz sulle coppie
+     adiacenti, nei due temi (peggiore ΔE CVD 11,9 chiaro / 11,4 scuro, visione normale ≥ 17,7). Su tutte le coppie
+     oliva e arancio restano vicini per protanopia: per questo legenda, etichette e vista tabella ci sono sempre.
+     Le tinte evitano quelle delle fonti (blu OpenAQ, acqua EEA, giallo CAMS) */
+  --zona-1: #2f55c8;
+  --zona-2: #6c7a05;
+  --zona-3: #d55181;
+  --zona-4: #e08a00;          /* 2,7:1 sul bianco: ammesso solo con etichette o tabella (regola della skill) */
+
+  /* fonti dell'aria: ARPA è una serie a sé (inchiostro); gruppo di validazione OpenAQ · EEA · CAMS */
+  --fonte-arpa: #222124;
+  --fonte-openaq: #2a78d6;
+  --fonte-eea: #1baf7a;
+  --fonte-cams: #eda100;
+
+  /* scala sequenziale dell'aria: blu petrolio, dal valore basso (chiaro) al valore alto (scuro). Passo 5 (19/10/2026,
+     scelta di Matteo): prima lavanda, il segnale «da AI» più riconoscibile dell'audit. Validata con lo script della
+     skill dataviz: una tinta, luminosità monotòna, salti ≥ 0,06, estremo chiaro a 2,3:1 sul bianco */
+  --rampa-1: #74b5c0;
+  --rampa-2: #4f9aa7;
+  --rampa-3: #2f7d8b;
+  --rampa-4: #1a6170;
+  --rampa-5: #0b4652;
+  /* scala sequenziale della temperatura: dal chiaro caldo (basso) al rosso scuro (alto), luminosità monotòna (CVD) */
+  --calore-1: #fde7c2;
+  --calore-2: #f9bd7a;
+  --calore-3: #ee8b4a;
+  --calore-4: #d4552a;
+  --calore-5: #a32a14;
+  /* fattori di mitigazione CLMS (16/10/2026): chioma arborea in verde, suolo impermeabile in grigio-terra.
+     Tinte proprie, così non si scambiano per un inquinante o per la temperatura; luminosità monotòna (CVD) */
+  --alberi-1: #dcefd5;
+  --alberi-2: #a9d69a;
+  --alberi-3: #6fb661;
+  --alberi-4: #3d8a3c;
+  --alberi-5: #1d5a26;
+  --suolo-1: #ece6df;
+  --suolo-2: #cbbfb1;
+  --suolo-3: #a39282;
+  --suolo-4: #74665a;
+  --suolo-5: #4a3f37;
+  /* eventi sanitari della vista «Salute» (29/10/2026): vinaccia poco saturo, dal chiaro (meno eventi) allo scuro.
+     Luminosità monotòna a passi ≥ 0,12 (OKLab), ΔE ≥ 9 dal magenta della zona 3 e ≥ 10,9 dalla rampa del calore */
+  --salute-1: #efdcdf;
+  --salute-2: #d7a9b1;
+  --salute-3: #b0707d;
+  --salute-4: #7f3d4d;
+  --salute-5: #4e1d2a;
+  /* tabella dei 12 mesi di Stagionalità (29/10/2026, Fase 5, scelta di Matteo: rampa del dominio): il colore pieno del
+     mese peggiore (rango 1) di ogni dominio; le celle lo mescolano al fondo dall'8% al 100% secondo il rango. Stessa
+     luminosità per i tre domini (OKLab L ≈ 0,69) e testo inchiostro ≥ 5,7:1 anche sulla cella piena */
+  --stagione-aria: #72a3ad;
+  --stagione-calore: #e38364;
+  --stagione-salute: #ba9198;
+  --mappa-bordo: #ffffff;
+  --mappa-null: #a9a9ab;      /* la fonte copre la zona ma il valore non è usabile */
+  --mappa-nodata: #8e8e90;    /* contorno puntinato: la fonte non copre la zona */
+  --mappa-selezione: #222124;
+  /* il Salento in rilievo (28/10/2026): velo sulla base fuori dai confini, ombra sotto la sagoma e sotto la zona scelta */
+  --mappa-fuori: #f4f4f5;
+  --mappa-ombra: rgba(34, 33, 36, 0.28);
+  --mappa-ombra-forte: rgba(34, 33, 36, 0.42);
+  /* mappa in scala di grigi, schiarita (12/10/2026) così strade e coste restano leggibili sotto i poligoni a 0,72 */
+  --tile-filtro: grayscale(1) contrast(0.9) brightness(1.14);
+
+  /* stati */
+  --stato-null-sfondo: #f1eff3;
+  --stato-nodata-sfondo: #f2f2f2;
+  --modellato-sfondo: #fdf3d3;
+  --modellato-testo: #6b4e00;
+  /* dato simulato (25/10/2026, richiesta di Matteo): il giallo del tema, quello del quadrato del marchio (--lime), pieno
+     nei badge e schiarito nei fondi di tessera, sezione e riga; mai il colore di una serie (le serie simulate hanno il
+     colore della zona e un tratto proprio) */
+  --simulato: var(--lime);
+  --simulato-su: var(--su-accento);   /* testo sul giallo pieno */
+  --simulato-sfondo: #f6fbdc;
+  --simulato-bordo: #d3e86a;
+  --errore: #b3372b;
+
+  /* bande dell'indice di salubrità (verde→rosso, scala di severità; luminosità separata per daltonismo) */
+  --salubrita-buona: #2e8b57;
+  --salubrita-accettabile: #c2970a;
+  --salubrita-scadente: #dd6b20;
+  --salubrita-cattiva: #c0392b;
+  --salubrita-nc: #8e8e90;      /* non confrontabile: la statistica del dato non corrisponde a nessun limite */
+
+  --ombra: 0 1px 2px rgba(20, 20, 24, 0.04), 0 8px 24px rgba(20, 20, 24, 0.05);
+}
+
+/* tema scuro. Fino al 19/10/2026 gli stessi token davano anche la card scura «in evidenza» dei numeri di testa
+   (come Sleep Analysis in flux), tolta nel passo 4 anti-slop */
+:root[data-tema='scuro'] {
+  color-scheme: dark;
+  --card: #222124;
+  --card-2: #2c2b2f;
+  --card-3: #38373b;
+  --testo: #f6f5f7;
+  --testo-2: #a9a9ab;
+  --testo-3: #9a9a9c;          /* 4,5:1 anche su --card-2 scuro (prima #8e8e90: 4,3:1) */
+  --linea: #333236;
+  --linea-2: #4c4b4e;
+  --griglia: #2e2d31;
+  --asse: #4c4b4e;
+  --zona-1: #6f8ff0;
+  --zona-2: #899a03;
+  --zona-3: #d55181;
+  --zona-4: #c27a00;
+  --fonte-arpa: #f6f5f7;
+  --fonte-openaq: #3987e5;
+  --fonte-eea: #199e70;
+  --fonte-cams: #c98500;
+  --stato-null-sfondo: #2f2c35;
+  --stato-nodata-sfondo: #2c2b2f;
+  --modellato-sfondo: #3a3220;
+  --modellato-testo: #f0d68a;
+  --simulato-sfondo: #2b2e1c;
+  --simulato-bordo: #5c6a17;
+  --errore: #f08a7e;
+  --salubrita-buona: #3fb37a;
+  --salubrita-accettabile: #e0b32a;
+  --salubrita-scadente: #ef8b43;
+  --salubrita-cattiva: #ef6a5c;
+  --salubrita-nc: #9a9a9c;
+}
+
+:root[data-tema='scuro'] {
+  --pagina: #19181b;
+  --barra: #222124;
+  --barra-attiva: #daf163;
+  --barra-attiva-testo: #222124;
+  /* scala invertita sul fondo scuro: valore alto = più luminoso. Fascia allargata come nel tema chiaro. */
+  --rampa-1: #2f7683;          /* estremo basso a 3,1:1 sul fondo scuro (validato) */
+  --rampa-2: #45909d;
+  --rampa-3: #62acb8;
+  --rampa-4: #8bc8d1;
+  --rampa-5: #c0e4e9;
+  --calore-1: #5b1f10;
+  --calore-2: #9a3b1c;
+  --calore-3: #d4672f;
+  --calore-4: #f29a55;
+  --calore-5: #fcd29a;
+  --alberi-1: #1d4a24;
+  --alberi-2: #2f6f35;
+  --alberi-3: #4f9a4c;
+  --alberi-4: #7fc173;
+  --alberi-5: #b9e2a9;
+  --suolo-1: #3d342e;
+  --suolo-2: #5d5048;
+  --suolo-3: #857567;
+  --suolo-4: #b0a091;
+  --suolo-5: #ddd3c8;
+  --salute-1: #4f2129;
+  --salute-2: #7b3a48;
+  --salute-3: #a96573;
+  --salute-4: #d197a2;
+  --salute-5: #f0cfd5;
+  /* sul fondo scuro la cella piena resta scura (L ≈ 0,51) perché il testo chiaro tenga ≥ 5,3:1 (prima 4,1:1) */
+  --stagione-aria: #3d6c76;
+  --stagione-calore: #9b5231;
+  --stagione-salute: #8c5762;
+  --mappa-bordo: #19181b;
+  --mappa-null: #6e6d72;
+  --mappa-nodata: #8e8e90;
+  --mappa-selezione: #f6f5f7;
+  --mappa-fuori: #19181b;
+  --mappa-ombra: rgba(0, 0, 0, 0.6);
+  --mappa-ombra-forte: rgba(0, 0, 0, 0.75);
+  --tile-filtro: invert(1) grayscale(1) brightness(0.74) contrast(1.08);
+  --ombra: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+}

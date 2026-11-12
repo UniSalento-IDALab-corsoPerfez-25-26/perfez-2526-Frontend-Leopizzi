@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Marchio OneHealth (19/10/2026): cuore aperto da cui escono tre particelle sospese, l'aria che arriva al corpo.
+       Stesso disegno di IconaMarchio in src/componenti/Icone.tsx; tratto e particelle un po' più spessi per i 16 px -->
+  <rect width="32" height="32" rx="8" fill="#DAF163"/>
+  <path d="M21 9.6c-1.9 0-3.6 1-5 2.9-1.4-1.9-3.1-2.9-5-2.9-3 0-5 2.4-5 5.4 0 4.8 5.2 8.5 10 11.6 3.6-2.3 7.4-5 9.1-8.4"
+        fill="none" stroke="#222124" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#222124">
+    <circle cx="24.6" cy="7.6" r="1.6"/><circle cx="27.4" cy="12" r="1.35"/><circle cx="22.2" cy="4.4" r="1.15"/>
+  </g>
+</svg>
